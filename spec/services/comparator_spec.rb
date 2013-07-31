@@ -22,6 +22,10 @@ describe Bebot::Services::Comparator do
       subject.contributors.first.login.should == 'charlie'
     end
 
+    it 'excludes mergers' do
+      subject.contributors.map(&:login).should_not include('alice')
+    end
+
     context 'when branches are identical' do
       let(:data) { DATA_COMPARE_EMPTY }
 
@@ -42,6 +46,12 @@ describe Bebot::Services::Comparator do
   describe '#commits' do
     it 'returns number of commits' do
       subject.commits.should == 4
+    end
+  end
+
+  describe '#pull_requests' do
+    it 'returns number of pull requests' do
+      subject.pull_requests.should == 1
     end
   end
 
@@ -183,7 +193,7 @@ DATA_COMPARE = <<-JSON
             "email": "alice@foo.com",
             "date": "2013-07-23T12:36:45Z"
           },
-          "message": "hi there",
+          "message": "Merge pull request #1337 from org/foo/bar",
           "tree": {
             "sha": "5fa0031d17eef58eaa5b01351f25316e89c699e5"
           },
