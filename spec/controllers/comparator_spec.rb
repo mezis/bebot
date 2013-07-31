@@ -11,9 +11,10 @@ describe Bebot::Controllers::Comparator do
     let(:perform) { get '/compare/org/repo/master...production' }
 
     let(:mock_comparator) { double(
-      staleness: 1234,
-      repo:      'org/repo',
-      commits:   1337,
+      staleness:     1234,
+      repo:          'org/repo',
+      commits:       1337,
+      pull_requests: 123,
       contributors: [
         Bebot::Models::Contributor.new('login' => 'alice',   'gravatar_id' => '1234'),
         Bebot::Models::Contributor.new('login' => 'bob',     'gravatar_id' => '5678'),
