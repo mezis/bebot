@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'sinatra'     # tiny web application framework
 gem 'octokit'     # githup API client
 gem 'yajl-ruby'   # fast JSON pserser/encoder
