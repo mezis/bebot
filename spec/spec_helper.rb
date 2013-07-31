@@ -23,3 +23,4 @@ end
 ENV['GITHUB_TOKEN']   = 'github_token'
 ENV['GITHUB_LOGIN']   = 'github_login'
 ENV['DATADOG_TOKEN']  = 'dd_token'
+ENV['RACK_ENV']       = 'test'
