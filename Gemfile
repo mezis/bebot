@@ -6,6 +6,8 @@ gem 'yajl-ruby'   # fast JSON pserser/encoder
 
 gem 'dogapi'      # DataDog client
 
+gem 'newrelic_rpm' # Monitoring
+
 group :development do
   gem 'foreman'   # start processes, manage environemtn
 
