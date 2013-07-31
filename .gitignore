@@ -2,3 +2,4 @@
 .env
 nohup.out
 tmp/
+log/
