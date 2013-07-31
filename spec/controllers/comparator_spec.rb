@@ -13,6 +13,7 @@ describe Bebot::Controllers::Comparator do
     let(:mock_comparator) { double(
       staleness: 1234,
       repo:      'org/repo',
+      commits:   1337,
       contributors: [
         Bebot::Models::Contributor.new('login' => 'alice',   'gravatar_id' => '1234'),
         Bebot::Models::Contributor.new('login' => 'bob',     'gravatar_id' => '5678'),
