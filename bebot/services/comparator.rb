@@ -13,8 +13,7 @@ module Bebot::Services
     end
 
     def contributors
-      @contributors ||= _comparison.commits
-        .reject { |payload| payload.commit.message =~ /^Merge pull request/ }
+      @contributors ||= _real_commits
         .group_by { |c| Bebot::Models::Contributor.new(c.author) }
         .map { |contributor,commits| [contributor, commits.length] }
         .sort { |a,b| b.last <=> a.last }
@@ -26,9 +25,7 @@ module Bebot::Services
     end
 
     def pull_requests
-      @pull_requests ||= _comparison.commits
-        .select { |payload| payload.commit.message =~ /^Merge pull request/ }
-        .length
+      @pull_requests ||= _merge_commits.length
     end
 
     def staleness
@@ -41,8 +38,18 @@ module Bebot::Services
 
     private
 
+    def _real_commits
+      _comparison.commits
+        .reject { |payload| payload.commit.message =~ /^Merge pull request/ }
+    end
+
+    def _merge_commits
+      _comparison.commits
+        .select { |payload| payload.commit.message =~ /^Merge pull request/ }
+    end
+
     def _oldest_timestamp
-      @oldest_timestamp ||= _comparison.commits
+      @oldest_timestamp ||= _merge_commits
         .map { |payload| payload.commit.author.date }
         .min
     end

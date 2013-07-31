@@ -37,7 +37,7 @@ describe Bebot::Services::Comparator do
 
   describe '#staleness' do
     it 'returns seconds since oldest commit' do
-      Timecop.freeze '2013-07-23T11:22:42Z' do
+      Timecop.freeze '2013-07-21T11:22:42Z' do
         subject.staleness.should == 7200
       end
     end
@@ -186,7 +186,7 @@ DATA_COMPARE = <<-JSON
           "author": {
             "name": "Alice",
             "email": "alice@foo.com",
-            "date": "2013-07-23T12:36:45Z"
+            "date": "2013-07-21T09:22:42Z"
           },
           "committer": {
             "name": "Alice",
