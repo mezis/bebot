@@ -4,6 +4,8 @@ gem 'sinatra'     # tiny web application framework
 gem 'octokit'     # githup API client
 gem 'yajl-ruby'   # fast JSON pserser/encoder
 
+gem 'dogapi'      # DataDog client
+
 group :development do
   gem 'foreman'   # start processes, manage environemtn
 

@@ -9,8 +9,10 @@ describe Bebot::Controllers::Comparator do
 
   context 'when comparison is valid' do
     let(:perform) { get '/compare/org/repo/master...production' }
+
     let(:mock_comparator) { double(
       staleness: 1234,
+      repo:      'org/repo',
       contributors: [
         Bebot::Models::Contributor.new('login' => 'alice',   'gravatar_id' => '1234'),
         Bebot::Models::Contributor.new('login' => 'bob',     'gravatar_id' => '5678'),
@@ -18,8 +20,11 @@ describe Bebot::Controllers::Comparator do
       ]
     )}
 
+    let(:mock_dogapi) { double emit_point:nil }
+
     before do
       Bebot::Services::Comparator.stub new:mock_comparator
+      Dogapi::Client.stub new:mock_dogapi
     end
   
     it "suceeds" do
@@ -36,8 +41,9 @@ describe Bebot::Controllers::Comparator do
       response.contributors.last.gravatar_url.should =~ %r(gravatar.com.*90ab)
     end
 
-    xit "notifies Datadog" do
-      DATADOG.should_receive 'something'
+    it "notifies Datadog" do
+      mock_dogapi.should_receive(:emit_point).twice
+      perform
     end
 
     xit "notifies Ducksboard" do

@@ -19,3 +19,7 @@ set :logging,      false
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 end
+
+ENV['GITHUB_TOKEN']   = 'github_token'
+ENV['GITHUB_LOGIN']   = 'github_login'
+ENV['DATADOG_TOKEN']  = 'dd_token'
