@@ -12,8 +12,8 @@ module Bebot::Models
       @gravatar_id = options['gravatar_id']
     end
 
-    def to_hash
-      { login: @login, gravatar_id: @gravatar_id }
+    def gravatar_url
+      "http://www.gravatar.com/avatar/#{gravatar_id}?s=200&d=retro"
     end
 
     def <=>(other)

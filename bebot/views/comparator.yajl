@@ -1,9 +1,0 @@
-
-json = {
-  staleness:    comparator.staleness,
-  commits:      comparator.commits,
-  pulls:        comparator.pull_requests,
-  contributors: comparator.contributors.take(5).map { |c|
-    { 'login' => c.login, 'gravatar_url' => "http://www.gravatar.com/avatar/#{c.gravatar_id}?s=200&d=retro" }
-  }
-}

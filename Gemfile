@@ -2,16 +2,12 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'sinatra'     # tiny web application framework
-gem 'octokit'     # githup API client
-gem 'yajl-ruby'   # fast JSON pserser/encoder
-
-gem 'dogapi'      # DataDog client
-
-gem 'newrelic_rpm' # Monitoring
+gem 'octokit'         # githup API client
+gem 'dogapi'          # DataDog client
+gem 'rufus-scheduler' # task scheduler
 
 group :development do
-  gem 'foreman'   # start processes, manage environemtn
+  gem 'foreman'   # start processes, manage environement
 
   gem 'rake'      # like make, but Ruby
   gem 'pry'       # a better CLI
@@ -21,6 +17,5 @@ group :development do
   gem 'guard'     # autorun test suite
   gem 'guard-rspec'
   gem 'guard-bundler'
-  gem 'rack-test' # functional testing
 end
 

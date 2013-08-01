@@ -1,18 +1,15 @@
 require 'spec_helper'
-require 'bebot/controllers/comparator'
-require 'rack/test'
+require 'bebot/services/compare_branches'
 
-describe Bebot::Controllers::Comparator do
-  include Rack::Test::Methods
-
-  let(:app) { described_class }
-
+describe Bebot::Services::CompareBranches do
   context 'when comparison is valid' do
-    let(:perform) { get '/compare/org/repo/master...production' }
+    let(:perform) { described_class.new(repo:'org/rep', from:'foo', to:'bar').run }
 
     let(:mock_comparator) { double(
-      staleness:     1234,
       repo:          'org/repo',
+      from:          'foo',
+      to:            'bar',
+      staleness:     1234,
       commits:       1337,
       pull_requests: 123,
       contributors: [
@@ -31,12 +28,10 @@ describe Bebot::Controllers::Comparator do
   
     it "suceeds" do
       perform
-      last_response.should be_ok
     end
 
     it 'returns comparison data' do
-      perform
-      response = Hashie::Mash.new JSON.parse(last_response.body)
+      response = Hashie::Mash.new perform
       response.staleness.should == 1234
       response.contributors.length.should == 3
       response.contributors.last.login.should == 'charlie'

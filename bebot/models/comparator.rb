@@ -55,7 +55,7 @@ module Bebot::Models
     end
 
     def _comparison
-      @_comparison ||= client.compare(repo, from, to)
+      @_comparison ||= client.compare(repo, to, from)
     end
   end
 end
