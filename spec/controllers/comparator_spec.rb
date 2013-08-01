@@ -25,7 +25,7 @@ describe Bebot::Controllers::Comparator do
     let(:mock_dogapi) { double emit_point:nil }
 
     before do
-      Bebot::Services::Comparator.stub new:mock_comparator
+      Bebot::Models::Comparator.stub new:mock_comparator
       Dogapi::Client.stub new:mock_dogapi
     end
   

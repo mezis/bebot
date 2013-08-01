@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'bebot/services/comparator'
+require 'bebot/models/comparator'
 require 'octokit'
 require 'dogapi'
 require 'yajl'
@@ -13,7 +13,7 @@ module Bebot::Controllers
         login:       ENV['GITHUB_LOGIN'], 
         oauth_token: ENV['GITHUB_TOKEN'])
 
-      comparator = Bebot::Services::Comparator.new(
+      comparator = Bebot::Models::Comparator.new(
           client: client,
           repo:   "#{params['org']}/#{params['repo']}",
           from:   params['from'],

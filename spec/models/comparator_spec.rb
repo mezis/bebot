@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'bebot/models/contributor'
-require 'bebot/services/comparator'
+require 'bebot/models/comparator'
 
-describe Bebot::Services::Comparator do
+describe Bebot::Models::Comparator do
 
   let(:client) { double('client') }
   let(:data) { DATA_COMPARE } 
@@ -38,7 +38,7 @@ describe Bebot::Services::Comparator do
   describe '#staleness' do
     it 'returns seconds since oldest commit' do
       Timecop.freeze '2013-07-21T11:22:42Z' do
-        subject.staleness.should == 7200
+        subject.staleness.should == 2.0
       end
     end
   end

@@ -1,7 +1,7 @@
 require 'bebot/config'
 require 'bebot/models/contributor'
 
-module Bebot::Services
+module Bebot::Models
   class Comparator
     attr_reader :client, :repo, :from, :to
 
@@ -33,7 +33,7 @@ module Bebot::Services
 
       now = DateTime.now.to_time.utc
       old = DateTime.parse(_oldest_timestamp).to_time.utc
-      now - old
+      (now - old) / 3600.0
     end
 
     private
