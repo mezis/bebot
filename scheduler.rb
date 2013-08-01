@@ -13,7 +13,7 @@ scheduler = Rufus::Scheduler.new
 COMPARISONS = JSON.parse(ENV['BEBOT_COMPARISONS'])
 
 COMPARISONS.each do |payload|
-  scheduler.every '10m', first_in:'1s' do |job|
+  scheduler.every '5m', first_in:'1s' do |job|
     Bebot::Services::CompareBranches.new(
       repo: payload['repo'], from: payload['from'], to: payload['to']
     ).run
