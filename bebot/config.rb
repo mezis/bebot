@@ -1,4 +1,7 @@
 require 'pathname'
+require 'dotenv'
+
+Dotenv.overload '.env.local'
 
 module Bebot
   def self.root
