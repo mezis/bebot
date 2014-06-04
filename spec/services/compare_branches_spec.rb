@@ -24,6 +24,7 @@ describe Bebot::Services::CompareBranches do
     before do
       allow(Bebot::Models::Comparator).to receive(:new) { mock_comparator }
       allow(Dogapi::Client).to receive(:new) { mock_dogapi }
+      allow_any_instance_of(Bebot::Services::NotifySlack).to receive(:run) { nil }
     end
   
     it "suceeds" do
@@ -46,5 +47,7 @@ describe Bebot::Services::CompareBranches do
     xit "notifies Ducksboard" do
       expect(DUCKSBOARD).to receive('something')
     end
+
+    xit "Notifies Slack"
   end
 end

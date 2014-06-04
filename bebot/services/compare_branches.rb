@@ -3,16 +3,18 @@ require 'bebot/models/comparator'
 require 'bebot/services/notify_datadog'
 require 'bebot/services/notify_ducksboard'
 require 'bebot/services/notify_log'
+require 'bebot/services/notify_slack'
 require 'octokit'
 
 module Bebot::Services
   class CompareBranches
     attr_reader :client, :repo, :from, :to
 
-    def initialize(repo:nil, from:'master', to:'production')
+    def initialize(repo:nil, from:'master', to:'production', notify: %w(log))
       @repo   = repo
       @from   = from
       @to     = to
+      @notify = notify
     end
 
     def run
@@ -25,16 +27,19 @@ module Bebot::Services
           from:   from,
           to:     to)
 
-      NotifyDatadog.new(comparator).run
+      @notify.each do |target|
+        Bebot::Services.const_get("Notify#{target.capitalize}").new(comparator).run
+      end
+
 
       # Disabled pending tests
       # NotifyDucksboard.new(comparator).run
       
-      NotifyLog.new(comparator).run
 
       {
-        staleness:    comparator.staleness,
-        contributors: comparator.contributors
+        staleness:     comparator.staleness,
+        pull_requests: comparator.pull_requests,
+        contributors:  comparator.contributors
       }
     end
   end
