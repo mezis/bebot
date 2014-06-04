@@ -3,7 +3,10 @@ require 'bebot/services/compare_branches'
 
 describe Bebot::Services::CompareBranches do
   context 'when comparison is valid' do
-    let(:args)    { { repo:'org/rep', from:'foo', to:'bar' } }
+    let(:args) do
+      { repo:'org/rep', from:'foo', to:'bar', notify: notifier_list }
+    end
+    let(:notifier_list) { [] }
     let(:perform) { described_class.new(args).run }
 
     let(:mock_comparator) { double(
@@ -20,11 +23,15 @@ describe Bebot::Services::CompareBranches do
       ]
     )}
 
-    let(:mock_dogapi) { double emit_point:nil }
+    let(:mock_dogapi)              { double emit_point:nil }
+    let(:mock_slack_notifier)      { double(run: nil) }
+    let(:mock_ducksboard_notifier) { double(run: nil) }
 
     before do
       allow(Bebot::Models::Comparator).to receive(:new) { mock_comparator }
       allow(Dogapi::Client).to receive(:new) { mock_dogapi }
+      allow(Bebot::Services::NotifySlack).to receive(:new) { mock_slack_notifier }
+      allow(Bebot::Services::NotifyDucksboard).to receive(:new) { mock_ducksboard_notifier }
       allow_any_instance_of(Bebot::Services::NotifySlack).to receive(:run) { nil }
     end
   
@@ -41,20 +48,33 @@ describe Bebot::Services::CompareBranches do
     end
 
     context 'when passing Datadog in the notify list' do
-      before do
-        args.merge!({notify: %w{datadog}})
-      end
+      let(:notifier_list) { %w(datadog) }
 
       it "notifies Datadog" do
         expect(mock_dogapi).to receive(:emit_point).twice
+
         perform
       end
     end
 
-    xit "notifies Ducksboard" do
-      expect(DUCKSBOARD).to receive('something')
+    context 'when passing Ducksboard in the notify list' do
+      let(:notifier_list) { %w(ducksboard) }
+
+      it "notifies Ducksboard" do
+        expect(mock_ducksboard_notifier).to receive(:run)
+
+        perform
+      end
     end
 
-    xit "Notifies Slack"
+    context 'when passing Slack in the notify list' do
+      let(:notifier_list) { %w(slack) }
+
+      it "notifies Slack" do
+        expect(mock_slack_notifier).to receive(:run)
+
+        perform
+      end
+    end
   end
 end
