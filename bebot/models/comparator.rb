@@ -32,7 +32,7 @@ module Bebot::Models
       return 0 if _oldest_timestamp.nil?
 
       now = DateTime.now.to_time.utc
-      old = DateTime.parse(_oldest_timestamp).to_time.utc
+      old = _oldest_timestamp.to_time.utc
       (now - old) / 3600.0
     end
 
