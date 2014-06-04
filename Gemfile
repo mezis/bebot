@@ -1,6 +1,6 @@
-source 'https://rubygems.org'
+source ENV.fetch('GEM_SOURCE', 'https://rubygems.org')
 
-ruby '2.0.0'
+ruby '2.1.1'
 
 gem 'octokit'         # githup API client
 gem 'dogapi'          # DataDog client
