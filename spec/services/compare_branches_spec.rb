@@ -22,8 +22,8 @@ describe Bebot::Services::CompareBranches do
     let(:mock_dogapi) { double emit_point:nil }
 
     before do
-      Bebot::Models::Comparator.stub new:mock_comparator
-      Dogapi::Client.stub new:mock_dogapi
+      allow(Bebot::Models::Comparator).to receive(:new) { mock_comparator }
+      allow(Dogapi::Client).to receive(:new) { mock_dogapi }
     end
   
     it "suceeds" do
@@ -32,19 +32,19 @@ describe Bebot::Services::CompareBranches do
 
     it 'returns comparison data' do
       response = Hashie::Mash.new perform
-      response.staleness.should == 1234
-      response.contributors.length.should == 3
-      response.contributors.last.login.should == 'charlie'
-      response.contributors.last.gravatar_url.should =~ %r(gravatar.com.*90ab)
+      expect(response.staleness).to eq(1234)
+      expect(response.contributors.length).to eq(3)
+      expect(response.contributors.last.login).to eq('charlie')
+      expect(response.contributors.last.gravatar_url).to match(%r(gravatar.com.*90ab))
     end
 
     it "notifies Datadog" do
-      mock_dogapi.should_receive(:emit_point).twice
+      expect(mock_dogapi).to receive(:emit_point).twice
       perform
     end
 
     xit "notifies Ducksboard" do
-      DUCKSBOARD.should_receive 'something'
+      expect(DUCKSBOARD).to receive('something')
     end
   end
 end

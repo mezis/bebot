@@ -9,28 +9,32 @@ describe Bebot::Models::Comparator do
   subject { described_class.new client:client, repo:'superbath', from:'master', to:'production' }
 
   before do
-    client.stub compare:Hashie::Mash.new(JSON.parse(data))
+    allow(client).to receive(:compare) {
+      Hashie::Mash.new(JSON.parse(data))
+    }
   end
 
   describe '#contributors' do
     it 'lists contributors' do
-      subject.contributors.should be_a_kind_of(Array)
-      subject.contributors.each { |c| c.should be_a_kind_of(Bebot::Models::Contributor) }
+      expect(subject.contributors).to be_a_kind_of(Array)
+      subject.contributors.each do |c|
+        expect(c).to be_a_kind_of(Bebot::Models::Contributor)
+      end
     end
 
     it 'orders by descending staleness' do
-      subject.contributors.first.login.should == 'charlie'
+      expect(subject.contributors.first.login).to eq('charlie')
     end
 
     it 'excludes mergers' do
-      subject.contributors.map(&:login).should_not include('alice')
+      expect(subject.contributors.map(&:login)).not_to include('alice')
     end
 
     context 'when branches are identical' do
       let(:data) { DATA_COMPARE_EMPTY }
 
       it 'is empty' do
-        subject.contributors.should be_empty
+        expect(subject.contributors).to be_empty
       end
     end
   end
@@ -38,20 +42,20 @@ describe Bebot::Models::Comparator do
   describe '#staleness' do
     it 'returns seconds since oldest commit' do
       Timecop.freeze '2013-07-21T11:22:42Z' do
-        subject.staleness.should == 2.0
+        expect(subject.staleness).to eq(2.0)
       end
     end
   end
 
   describe '#commits' do
     it 'returns number of commits' do
-      subject.commits.should == 4
+      expect(subject.commits).to eq(4)
     end
   end
 
   describe '#pull_requests' do
     it 'returns number of pull requests' do
-      subject.pull_requests.should == 1
+      expect(subject.pull_requests).to eq(1)
     end
   end
 
