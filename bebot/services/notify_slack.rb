@@ -11,7 +11,7 @@ module Bebot
 
       def run
         # abort if not stale enough
-        return unless @comparator.staleness > 6
+        return unless @comparator.staleness > ENV.fetch('SLACK_STALENESS_THRESHOLD', '1.0').to_f
 
         # abort if outside valid deploy hours
         now = TZInfo::Timezone.get('Europe/London').now
