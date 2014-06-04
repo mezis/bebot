@@ -6,6 +6,7 @@ gem 'octokit'         # githup API client
 gem 'dogapi'          # DataDog client
 gem 'rufus-scheduler' # task scheduler
 gem 'httparty'        # simple HTTP abstraction
+gem 'dotenv'          # configuration through the environment
 gem 'hashie',         require: false
 gem 'slack-notifier', require: false
 

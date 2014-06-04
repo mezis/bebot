@@ -86,6 +86,7 @@ PLATFORMS
 
 DEPENDENCIES
   dogapi
+  dotenv
   foreman
   guard
   guard-bundler
