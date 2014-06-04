@@ -39,8 +39,7 @@ module Bebot::Models
     private
 
     def _real_commits
-      _comparison.commits
-        .reject { |payload| payload.commit.message =~ /^Merge pull request/ }
+      _comparison.commits - _merge_commits
     end
 
     def _merge_commits
