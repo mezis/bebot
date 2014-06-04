@@ -4,11 +4,12 @@ module Bebot::Models
   class Contributor
     include Comparable
 
-    attr_reader :login, :gravatar_id
+    attr_reader :login, :name, :gravatar_id
 
     def initialize(options = nil)
       options ||= {}
-      @login       = options.fetch('login', 'unknown')
+      @login       = options['login']
+      @name        = options['name']
       @gravatar_id = options['gravatar_id']
     end
 

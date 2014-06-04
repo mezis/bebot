@@ -5,6 +5,7 @@ ruby '2.1.1'
 gem 'octokit'         # githup API client
 gem 'dogapi'          # DataDog client
 gem 'rufus-scheduler' # task scheduler
+gem 'httparty'        # simple HTTP abstraction
 
 group :development do
   gem 'foreman'   # start processes, manage environement
