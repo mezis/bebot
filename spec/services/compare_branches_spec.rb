@@ -3,7 +3,8 @@ require 'bebot/services/compare_branches'
 
 describe Bebot::Services::CompareBranches do
   context 'when comparison is valid' do
-    let(:perform) { described_class.new(repo:'org/rep', from:'foo', to:'bar').run }
+    let(:args)    { { repo:'org/rep', from:'foo', to:'bar' } }
+    let(:perform) { described_class.new(args).run }
 
     let(:mock_comparator) { double(
       repo:          'org/repo',
@@ -39,9 +40,15 @@ describe Bebot::Services::CompareBranches do
       expect(response.contributors.last.gravatar_url).to match(%r(gravatar.com.*90ab))
     end
 
-    it "notifies Datadog" do
-      expect(mock_dogapi).to receive(:emit_point).twice
-      perform
+    context 'when passing Datadog in the notify list' do
+      before do
+        args.merge!({notify: %w{datadog}})
+      end
+
+      it "notifies Datadog" do
+        expect(mock_dogapi).to receive(:emit_point).twice
+        perform
+      end
     end
 
     xit "notifies Ducksboard" do
