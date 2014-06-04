@@ -10,19 +10,17 @@ module Bebot::Services
     attr_reader :client, :repo, :from, :to
 
     def initialize(repo:nil, from:'master', to:'production')
-      @client = client
       @repo   = repo
       @from   = from
       @to     = to
     end
 
     def run
-      client = Octokit::Client.new(
-        login:       ENV['GITHUB_LOGIN'], 
-        oauth_token: ENV['GITHUB_TOKEN'])
+      @client = Octokit::Client.new(
+        access_token: ENV.fetch('GITHUB_TOKEN'))
 
       comparator = Bebot::Models::Comparator.new(
-          client: client,
+          client: @client,
           repo:   repo,
           from:   from,
           to:     to)
