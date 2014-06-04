@@ -20,7 +20,7 @@ COMPARISONS.each do |payload|
     ).run
   end
   
-  scheduler.every '1h', first_at: Rufus::Scheduler.parse('9:05am Europe/London') do |job|
+  scheduler.every '1h', first_in: '10s' do |job|
     Bebot::Services::CompareBranches.new(
       repo: payload['repo'], from: payload['from'], to: payload['to'],
       notify: %w(log slack)
