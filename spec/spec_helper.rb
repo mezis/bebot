@@ -7,6 +7,7 @@ dir = Pathname(__FILE__).parent.parent
 $:.unshift(dir) unless $:.include?(dir)
 
 require 'bebot/config'
+Dotenv.load
 
 RSpec.configure do |config|
   ENV['GITHUB_TOKEN']   = 'github_token'
