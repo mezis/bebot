@@ -34,9 +34,9 @@ module Bebot
       def within_deploy_window?
         now = TZInfo::Timezone.get('Europe/London').now
 
-        #Mon-Thu 9-17 PM and Friday 9-13 PM
+        # Mon-Thu 9-17 PM and Friday 9-12 PM
         ((1..4).include?(now.wday) && (9..16).include?(now.hour)) ||
-        (now.wday == 5 && (9..12).include?(now.hour))
+        (now.wday == 5 && (9..11).include?(now.hour))
       end
 
       def login_list
