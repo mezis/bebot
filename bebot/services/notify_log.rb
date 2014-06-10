@@ -1,5 +1,3 @@
-require 'bebot/config'
-
 module Bebot
   module Services
     class NotifyLog

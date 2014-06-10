@@ -1,4 +1,4 @@
-require 'bebot/config'
+require 'bebot/config/env'
 require 'httparty'
 
 module Bebot
