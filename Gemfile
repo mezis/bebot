@@ -1,6 +1,6 @@
 source ENV.fetch('GEM_SOURCE', 'https://rubygems.org')
 
-ruby '2.1.1'
+ruby '2.1.2'
 
 # githup API client
 gem 'octokit',         require: false
