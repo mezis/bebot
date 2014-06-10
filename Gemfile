@@ -23,6 +23,10 @@ gem 'hashie',          require: false
 # push messages to Slack chatrooms
 gem 'slack-notifier',  require: false
 
+# compute business hours
+gem 'business_time',   require: false
+
+
 group :development do
   gem 'foreman'   # start processes, manage environement
 

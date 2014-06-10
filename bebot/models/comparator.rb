@@ -1,3 +1,4 @@
+require 'bebot/config/time'
 require 'bebot/models/contributor'
 
 module Bebot
@@ -31,9 +32,7 @@ module Bebot
       def staleness
         return 0 if _oldest_timestamp.nil?
 
-        now = DateTime.now.to_time.utc
-        old = _oldest_timestamp.to_time.utc
-        (now - old) / 3600.0
+        _oldest_timestamp.business_time_until(Time.current) / 3_600
       end
 
       private
@@ -58,5 +57,4 @@ module Bebot
       end
     end
   end
-
 end
