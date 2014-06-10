@@ -1,6 +1,6 @@
 require 'bebot/config/env'
+require 'bebot/config/time'
 require 'slack-notifier'
-require 'tzinfo'
 
 module Bebot
   module Services
@@ -10,13 +10,11 @@ module Bebot
       end
 
       def run
+        # abort if outside valid deploy hours
+        return unless within_deploy_window?
+
         # abort if not stale enough
         return unless @comparator.staleness > ENV.fetch('SLACK_STALENESS_THRESHOLD', '1.0').to_f
-
-        # abort if outside valid deploy hours
-        now = TZInfo::Timezone.get('Europe/London').now
-        return unless (1..5).include?(now.wday)   # week days
-        return unless (9..16).include?(now.hour)  # 9am to 5pm
 
         notifier = Slack::Notifier.new(
           ENV.fetch('SLACK_TEAM'), ENV.fetch('SLACK_TOKEN'),
@@ -32,6 +30,14 @@ module Bebot
       end
 
       private
+
+      def within_deploy_window?
+        now = Time.current
+
+        # Mon-Thu 9-17 PM and Friday 9-12 PM
+        ((1..4).include?(now.wday) && (9..16).include?(now.hour)) ||
+        (now.wday == 5 && (9..11).include?(now.hour))
+      end
 
       def login_list
         logins = @comparator.contributors.map(&:login)
