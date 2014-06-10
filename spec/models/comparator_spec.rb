@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'bebot/models/contributor'
 require 'bebot/models/comparator'
 require 'yaml'
+require 'timecop'
 
 describe Bebot::Models::Comparator do
 

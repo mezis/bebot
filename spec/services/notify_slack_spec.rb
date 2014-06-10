@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'time'
+require 'timecop'
 
 module Bebot
   module Services
