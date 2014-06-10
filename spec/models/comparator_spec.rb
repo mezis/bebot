@@ -15,6 +15,8 @@ describe Bebot::Models::Comparator do
     }
   end
 
+  before { Time.zone = 'UTC' }
+
   describe '#contributors' do
     it 'lists contributors' do
       expect(subject.contributors).to be_a_kind_of(Array)
@@ -42,8 +44,15 @@ describe Bebot::Models::Comparator do
 
   describe '#staleness' do
     it 'returns seconds since oldest commit' do
-      Timecop.freeze '2013-07-21T11:22:42Z' do
+      Timecop.freeze '2013-07-22T11:22:42Z' do
         expect(subject.staleness).to eq(2.0)
+      end
+    end
+
+    it 'ignores time outside business hours' do
+      Timecop.freeze '2013-07-23T11:22:42Z' do
+        # 6pm to 9am is 15 hours, so instead of 24+2 = 26 we get 24+2-15 = 11.
+        expect(subject.staleness).to eq(11.0)
       end
     end
   end
@@ -155,7 +164,7 @@ commits:
     author:
       name: Alice
       email: alice@foo.com
-      date: 2013-07-21T09:22:42Z
+      date: 2013-07-22T09:22:42Z
     committer:
       name: Alice
       email: alice@foo.com

@@ -1,4 +1,4 @@
-require 'bebot/config'
+require 'bebot/config/env'
 require 'bebot/models/comparator'
 require 'dogapi'
 
