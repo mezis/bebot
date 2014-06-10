@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'time'
+require 'bebot/models/contributor'
+require 'bebot/services/notify_slack'
 require 'timecop'
 
 module Bebot
@@ -19,10 +20,9 @@ module Bebot
           Bebot::Models::Contributor.new('login' => 'charlie', 'gravatar_id' => '90ab')
         ]
       )}
+
       let(:notifier) { double(ping: nil) }
-      before do
-        allow(Slack::Notifier).to receive(:new).and_return(notifier)
-      end
+      before { allow(Slack::Notifier).to receive(:new).and_return(notifier) }
 
       let(:team)           { ENV["SLACK_TEAM"] }
       let(:slack_token)    { ENV["SLACK_TOKEN"] }
@@ -46,7 +46,7 @@ module Bebot
               expect(Slack::Notifier).to_not receive(:new)
                 .with(team, slack_token, channel: channel, username: slack_username)
 
-              Timecop.freeze(Time.parse("2014-03-02 18:00:00")) do
+              Timecop.freeze(Time.parse("2014-03-02 22:00:00 UTC")) do
                 subject.run
               end
             end
@@ -57,7 +57,7 @@ module Bebot
               expect(Slack::Notifier).to_not receive(:new)
                 .with(team, slack_token, channel: channel, username: slack_username)
 
-              Timecop.freeze(Time.parse("2014-03-07 13:00:00")) do
+              Timecop.freeze(Time.parse("2014-03-07 12:10:00 UTC")) do
                 subject.run
               end
             end

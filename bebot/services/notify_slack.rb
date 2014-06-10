@@ -1,6 +1,6 @@
 require 'bebot/config/env'
+require 'bebot/config/time'
 require 'slack-notifier'
-require 'tzinfo'
 
 module Bebot
   module Services
@@ -32,7 +32,7 @@ module Bebot
       private
 
       def within_deploy_window?
-        now = TZInfo::Timezone.get('Europe/London').now
+        now = Time.current
 
         # Mon-Thu 9-17 PM and Friday 9-12 PM
         ((1..4).include?(now.wday) && (9..16).include?(now.hour)) ||
