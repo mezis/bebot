@@ -32,6 +32,9 @@ module Bebot
       def staleness
         return 0 if _oldest_timestamp.nil?
 
+        puts "  oldest timestamp: #{_oldest_timestamp.inspect}"
+        puts "  now: #{Time.current.inspect}"
+        puts "  zone: #{Time.zone}"
         _oldest_timestamp.business_time_until(Time.current) / 3_600
       end
 
