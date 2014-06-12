@@ -31,5 +31,5 @@ end
 $stderr.puts "starting scheduler"
 
 $stderr.puts "  zone: #{Time.zone}"
-$stderr.puts "  current time: #{Time.current.inspect}""
+$stderr.puts "  current time: #{Time.current.inspect}"
 scheduler.join
