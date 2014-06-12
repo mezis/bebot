@@ -31,7 +31,8 @@ module Bebot
 
       def staleness
         return 0 if _oldest_timestamp.nil?
-
+        
+        Time.set_zone
         $stderr.puts "  oldest timestamp: #{_oldest_timestamp.inspect}"
         $stderr.puts "  now: #{Time.current.inspect}"
         $stderr.puts "  zone: #{Time.zone.to_s}"
