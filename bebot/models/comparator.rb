@@ -34,7 +34,7 @@ module Bebot
 
         $stderr.puts "  oldest timestamp: #{_oldest_timestamp.inspect}"
         $stderr.puts "  now: #{Time.current.inspect}"
-        $stderr.puts "  zone: #{Time.zone}"
+        $stderr.puts "  zone: #{Time.zone.to_s}"
         _oldest_timestamp.business_time_until(Time.current) / 3_600
       end
 
