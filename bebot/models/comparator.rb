@@ -31,12 +31,14 @@ module Bebot
 
       def staleness
         return 0 if _oldest_timestamp.nil?
-        
-        Time.set_zone
+
+        now = Time.now.in_time_zone(Bebot.time_zone)
+
+        Time.zone = Bebot.time_zone
         $stderr.puts "  oldest timestamp: #{_oldest_timestamp.inspect}"
-        $stderr.puts "  now: #{Time.current.inspect}"
+        $stderr.puts "  now: #{now.inspect}"
         $stderr.puts "  zone: #{Time.zone.to_s}"
-        _oldest_timestamp.business_time_until(Time.current) / 3_600
+        _oldest_timestamp.business_time_until(now) / 3_600
       end
 
       private
@@ -54,6 +56,7 @@ module Bebot
         @oldest_timestamp ||= _merge_commits
           .map { |payload| payload.commit.author.date }
           .min
+          .in_time_zone(Bebot.time_zone)
       end
 
       def _comparison
