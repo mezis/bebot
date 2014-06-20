@@ -22,11 +22,11 @@ module Bebot
           username: ENV.fetch('SLACK_USERNAME')
         )
 
-        notifier.ping [
+        notifier.ping([
           "Hi team!",
           "There are #{@comparator.commits} commits in #{@comparator.pull_requests} pull requests waiting to be deployed; the oldest merge is #{@comparator.staleness.round} hours old.",
           "#{login_list} should probably prepare a deploy!"
-        ].join("\n")
+        ].join("\n"), notifier_options)
       end
 
       private
@@ -52,6 +52,11 @@ module Bebot
         else
           "#{logins[0...-1].join(', ')} or #{logins[-1]}"
         end
+      end
+
+      def notifier_options
+        icon_url = ENV.fetch('ICON_URL', nil)
+        icon_url.nil? ? {} : { icon_url: icon_url }
       end
     end
   end

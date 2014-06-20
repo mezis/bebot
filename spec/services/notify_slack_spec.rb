@@ -40,6 +40,17 @@ module Bebot
           end
         end
 
+        it 'adds an icon_url' do
+          expect(notifier).to receive(:ping).with(
+            "Hi team!\nThere are 1337 commits in 123 pull requests waiting to be deployed; the oldest merge is 1234 hours old.\nalice, bob or charlie should probably prepare a deploy!",
+            icon_url: "http://my.domain.com/images/image-to-use.jpg"
+          )
+
+          Timecop.freeze(Time.parse("2014-03-05 13:00:00")) do
+            subject.run
+          end
+        end
+
         context 'when outside of the deploy window' do
           context 'from Mon-Thu after 16:00' do
             it 'does not notify the slack channel' do

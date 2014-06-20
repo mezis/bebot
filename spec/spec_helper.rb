@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] ||= 'test'
+
 require 'pathname'
 require 'hashie'
 require 'json'

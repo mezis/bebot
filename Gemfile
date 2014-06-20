@@ -12,7 +12,7 @@ gem 'dogapi',          require: false
 gem 'rufus-scheduler', require: false
 
 # simple HTTP abstraction
-gem 'httparty',        require: false 
+gem 'httparty',        require: false
 
 # configuration through the environment
 gem 'dotenv',          require: false
@@ -26,6 +26,11 @@ gem 'slack-notifier',  require: false
 # compute business hours
 gem 'business_time',   require: false
 
+# serve an image!
+gem 'rack',            require: false
+
+# ping/pong
+gem 'newrelic_rpm',    require: false
 
 group :development do
   gem 'foreman'   # start processes, manage environement
