@@ -1,5 +1,5 @@
 GEM
-  remote: http://eu.yarp.io/
+  remote: https://rubygems.org/
   specs:
     activesupport (4.1.1)
       i18n (~> 0.6, >= 0.6.9)
@@ -54,6 +54,7 @@ GEM
     minitest (5.3.4)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    newrelic_rpm (3.8.1.221)
     octokit (3.1.0)
       sawyer (~> 0.5.3)
     pry (0.9.12.6)
@@ -62,6 +63,7 @@ GEM
       slop (~> 3.4)
     pry-nav (0.2.2)
       pry (~> 0.9.10)
+    rack (1.5.2)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
@@ -105,9 +107,11 @@ DEPENDENCIES
   guard-rspec
   hashie
   httparty
+  newrelic_rpm
   octokit
   pry
   pry-nav
+  rack
   rake
   rspec
   rufus-scheduler
